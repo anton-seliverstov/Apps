@@ -32,6 +32,9 @@ static const int EXCEPTION_ERROR = 0;
 static const int EXCEPTION_WARN = 1;
 static const int EXCEPTION_INFO = 2;
 
+/**
+ * @brief Exception used to report errors to Main.
+ */
 class AppsException : public exception
 {
 public:

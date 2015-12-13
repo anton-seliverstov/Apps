@@ -27,11 +27,23 @@ namespace Apps {
 
 using namespace std;
 
+/**
+ * @brief Prints messages to console in a specific to this app way.
+ */
 class UiPrinter
 {
 public:
+    /**
+     * @brief Constructor will try to connect to current console
+     * and prepare it for output.
+     */
     UiPrinter();
     ~UiPrinter();
+
+    /**
+     * @brief prints lines from argument to console one-by-one.
+     * @param strings - lines to print.
+     */
     void print(vector<string> strings);
 
 protected:

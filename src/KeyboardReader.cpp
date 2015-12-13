@@ -17,22 +17,19 @@ You should have received a copy of the GNU General Public License
 along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// console access
 #include <stdio.h>
 #include <termios.h>
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <iostream> //temp
-
+// character sequence formatted result
 #include <sstream>
 #include <iomanip>
 
-#include "SglStringUtils/SglStringUtils.h"
+#include "AppsException.h"
 #include "KeyboardReader.h"
 
 namespace Apps {
 
-/* Read 1 character - echo defines echo mode */
 int KeyboardReader::getchAny(int echo)
 {
     int ch = 0;
@@ -48,20 +45,21 @@ int KeyboardReader::getchAny(int echo)
         tcsetattr(0, TCSANOW, &newt);         /* use these new terminal i/o settings now */
         fflush(stdin);
         ch = getchar();
-    }catch (...) {std::cout << "ERR";}
+    }catch (...) {
+        tcsetattr(0, TCSANOW, &oldt);         /* Restore old terminal i/o settings */
+        throw AppsException ("Can't connect to console!", EXCEPTION_ERROR);
+    }
 
     //fcntl(STDIN_FILENO, F_SETFL, flags);
     tcsetattr(0, TCSANOW, &oldt);             /* Restore old terminal i/o settings */
     return ch;
 }
 
-/* Read 1 character without echo */
 int KeyboardReader::getch()
 {
   return getchAny(0);
 }
 
-/* Read 1 character with echo */
 int KeyboardReader::getche()
 {
   return getchAny(1);

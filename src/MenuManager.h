@@ -22,7 +22,6 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <string>
 #include <sys/stat.h>
-#include <stdexcept>
 
 #include "UiPrinter.h"
 #include "SglXml/SglXml.h"
@@ -35,8 +34,17 @@ using namespace SglXml;
 class MenuManager
 {
 public:
+    /**
+     * @brief reads or creates apps-rc file.
+     */
     MenuManager();
     ~MenuManager();
+
+    /**
+     * @brief callback for KeyboardReader.
+     * @param key - character sequence.
+     * @return - true when siquence is recognized, false when not.
+     */
     bool processKey(string key);
 
 protected:

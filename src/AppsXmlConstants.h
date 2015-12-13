@@ -26,6 +26,7 @@ namespace AppsXmlConsts {
 using namespace std;
 
 static const string FILESEPARATOR = "/";
+static const string APPS_RC_FOLDER = ".config/apps";
 static const string APPS_RC_FILENAME = "apps-rc";
 
 static const string MENU_ITEM_TAG = "folder";
@@ -51,6 +52,45 @@ static const string PROP_FOLDER_ICON_PRE = "FOLDER_ICON_PRE";
 static const string PROP_FOLDER_ICON_POST = "FOLDER_ICON_POST";
 static const string PROP_APPLICATION_ICON_PRE = "APPLICATION_ICON_PRE";
 static const string PROP_APPLICATION_ICON_POST = "APPLICATION_ICON_POST";
+
+static const string APPS_RC_DEFAULTS = "<apps >\
+\n    -- see \"man apps-rc\" for detailed information.\
+\n    <prop name=\"SHOW_CMD\" value=\"false\"/>\
+\n    <prop name=\"SHOW_COMMENTS\" value=\"true\"/>\
+\n    -- arrows\
+\n    <prop name=\"KEYCODE_MENU_PREVIOUS\" value=\"027 091 065\"/>\
+\n    <prop name=\"KEYCODE_MENU_NEXT\" value=\"027 091 066\"/>\
+\n    <prop name=\"KEYCODE_MENU_IN\" value=\"027 091 067\"/>\
+\n    <prop name=\"KEYCODE_MENU_OUT\" value=\"027 091 068\"/>\
+\n    -- return button\
+\n    <prop name=\"KEYCODE_MENU_RUN\" value=\"010\"/>\
+\n    -- space bar\
+\n    <prop name=\"KEYCODE_MENU_EXIT\" value=\"032\"/>\
+\n    \
+\n    <prop name=\"FOLDER_ICON_PRE\" value=\"|_| \"/>\
+\n    <prop name=\"FOLDER_ICON_POST\" value=\" ~~\"/>\
+\n    <prop name=\"APPLICATION_ICON_PRE\" value=\"| \"/>\
+\n    <prop name=\"APPLICATION_ICON_POST\" value=\" ~~\"/>\
+\n    \
+\n    -- Main menu\
+\n    <folder name=\"root\">\
+\n        <folder name=\"Network\">\
+\n            <folder name=\"Linux\" comment=\"Common Linux environment.\">\
+\n                <app name=\"ping -c4\" comment=\"ping 4 times only.\"/>\
+\n                <app name=\"/sbin/ifconfig\" cmd=\"/sbin/ifconfig\" comment=\"Show IP to non-root user.\"/>\
+\n            </folder>\
+\n        </folder>\
+\n        <folder name=\"Editors\">\
+\n            <folder name=\"Linux\" comment=\"Common Linux environment.\">\
+\n                <app name=\"vim\" cmd=\"vim\" comment=\"Full featured editor.\"/>\
+\n            </folder>\
+\n            <app name=\"nano\" comment=\"User friendly editor. Not Standard.\"/>\
+\n        </folder>\
+\n        <folder name=\"Admin tools\"/>\
+\n        <folder name=\"Toys\"/>\
+\n    </folder>\
+\n</apps >\
+\n";
 
 }
 

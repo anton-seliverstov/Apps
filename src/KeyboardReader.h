@@ -26,11 +26,34 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 namespace Apps {
 using namespace std;
 
+/**
+ * @brief Reads keyboard character sequence.
+ * It can return 1 symbol at a time or subscribe call back for
+ * continuous updates.
+ */
 class KeyboardReader
 {
 public:
+    /**
+     * @brief Read 1 character without echo.
+     * @return
+     */
     int static getch();
+
+    /**
+     * @brief Read 1 character with echo.
+     * @return
+     */
     int static getche();
+
+    /**
+     * @brief subscribes callback for keyboard events.
+     * There is no unsubscribe method.
+     * It will break the sequence once it recognized it and on of
+     * ANSI sequences, and when callback returns true.
+     *
+     * @param callback - function to subscribe.
+     */
     void static subscribeForeve(function<bool(string)>callback);
 
 protected:

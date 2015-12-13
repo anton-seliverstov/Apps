@@ -17,11 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <cstdlib>
-#include <iostream>
 #include <fstream>
-#include <exception>
-#include <stdlib.h>
 
 #include "AppsException.h"
 #include "SglStringUtils/SglStringUtils.h"
@@ -39,7 +35,7 @@ MenuManager::MenuManager() :
     if(homedir.empty())
         throw invalid_argument("HOME variable is empty. Please don't run me as root, I'm too young for it...\n");
 
-    mAppsRcPath = homedir + FILESEPARATOR + APPS_RC_FILENAME;
+    mAppsRcPath = homedir + FILESEPARATOR + APPS_RC_FOLDER + FILESEPARATOR + APPS_RC_FILENAME;
 
     if(isFileExists(mAppsRcPath) == false)
         createAppsrcFileStub();
@@ -183,18 +179,11 @@ void MenuManager::eventMenuExit()
 
 void MenuManager::createAppsrcFileStub()
 {
+    string mkdir = "mkdir -p " + mAppsRcPath.substr(0, mAppsRcPath.find(APPS_RC_FOLDER)) + APPS_RC_FOLDER;
+    system(mkdir.c_str());
     ofstream myfile;
     myfile.open (mAppsRcPath.c_str());
-    myfile << "<folder name='root'>\n";
-    myfile << "\t<folder name='network'>\n";
-    myfile << "\t<\\folder>\n";
-    myfile << "\t<folder name='firewall'>\n";
-    myfile << "\t<\\folder>\n";
-    myfile << "\t<folder name='admin'>\n";
-    myfile << "\t<\\folder>\n";
-    myfile << "\t<folder name='toys'>\n";
-    myfile << "\t<\\folder>\n";
-    myfile << "<\\folder>\n";
+    myfile << APPS_RC_DEFAULTS;
     myfile.close();
 }
 
