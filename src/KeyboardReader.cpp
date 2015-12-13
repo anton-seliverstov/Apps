@@ -27,7 +27,7 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 #include <sstream>
 #include <iomanip>
 
-#include "SglStringUtils.h"
+#include "SglStringUtils/SglStringUtils.h"
 #include "KeyboardReader.h"
 
 namespace Apps {

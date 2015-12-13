@@ -25,7 +25,7 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdexcept>
 
 #include "UiPrinter.h"
-#include "SglXml.h"
+#include "SglXml/SglXml.h"
 
 namespace Apps {
 

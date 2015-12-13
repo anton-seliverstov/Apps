@@ -24,7 +24,7 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdlib.h>
 
 #include "AppsException.h"
-#include "SglStringUtils.h"
+#include "SglStringUtils/SglStringUtils.h"
 #include "AppsXmlConstants.h"
 #include "MenuManager.h"
 
