@@ -1,0 +1,32 @@
+.\" Manpage for apps.
+.\"
+.\" Copyright (C), 2015 Anton Seliverstov (seliverstov.ad@ya.ru)
+.\"
+.\" You may distribute under the terms of the GNU General Public
+.\" License as specified in the file COPYING that comes with the 
+.\" man-db distribution.
+.\"
+.TH man 1 "13 Dec 2015" "1.0" "apps man pages"
+.SH NAME
+generate_apps-rc \- scans system for installed applications and saves them to apps-rc file.
+.SH SYNOPSIS
+generate_apps-rc [DESTINATION] [FILENAME]
+.SH DESCRIPTION
+Scans DESTINATION folder (/usr/bin by default) and creates apps 
+configuration file (apps-rc by default) with FILENAME name.
+.sp
+The DESTINATION and FILENAME are optional parameters,
+if not passed into the script, it uses defaults.
+.sp
+The description and category of application are picked fom package description,
+using \'\'apt-cache show\'\' command.
+So apt-cache installation is required to run this script.
+.SH OPTIONS
+DESTINATION - where to search for installed applications (/usr/bin by default);
+
+FILENAME - name of menu file (apps-rc by default).
+
+.SH SEE ALSO
+apps(1), apps-rc(5), apt-cache(1)
+.SH AUTHOR
+Anton Seliverstov (seliverstov.ad@ya.ru)

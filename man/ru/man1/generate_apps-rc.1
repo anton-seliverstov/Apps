@@ -1,0 +1,32 @@
+.\" Manpage for apps.
+.\"
+.\" Copyright (C), 2015 Anton Seliverstov (seliverstov.ad@ya.ru)
+.\"
+.\" You may distribute under the terms of the GNU General Public
+.\" License as specified in the file COPYING that comes with the 
+.\" man-db distribution.
+.\"
+.TH man 1 "13 Dec 2015" "1.0" "Справочные страницы apps"
+.SH NAME
+generate_apps-rc \- ищет установленные в системе приложения и записывает их в apps-rc файл.
+.SH СИНТАКСИС
+generate_apps-rc [МЕСТО_ПОИСКА] [ИМЯ_ФАЙЛА]
+.SH DESCRIPTION
+Сканирует папку МЕСТО_ПОИСКА (/usr/bin по умолчанию) и создаёт 
+конфигурационный файл  apps (apps-rc по умолчанию) с именем ИМЯ_ФАЙЛА.
+.sp
+Параметры МЕСТО_ПОИСКА и ИМЯ_ФАЙЛА необязательные, 
+если они не переданы, используются значения по умолчанию.
+.sp
+Описание добавленного приложения и выбор категории осуществляется 
+на основе данных пакета приложения, полученные с помощью команды \'\'apt-cache show\'\'.
+Поэтому apt-cache должен быть установлен в системе для использования скрипта.
+.SH OPTIONS
+МЕСТО_ПОИСКА - где искать установленные приложения (/usr/bin по умолчанию);
+
+ИМЯ_ФАЙЛА - название файла меню (apps-rc по умолчанию).
+
+.SH SEE ALSO
+apps(1), apps-rc(5), apt-cache(1)
+.SH AUTHOR
+Антон Селивёрстов (seliverstov.ad@ya.ru)

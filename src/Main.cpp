@@ -1,5 +1,5 @@
 /*
-Copyright 2016 Anton Seliverstov (seliverstov.ad@ya.ru)
+Copyright 2015 Anton Seliverstov (seliverstov.ad@ya.ru)
 
 This file is part of Apps.
 
