@@ -31,19 +31,26 @@
 # ./generate_apps-rc.sh [where] [apps-rc filename]
 #
 
-# backup - first of all!
-timestamp="$(date +"%T-%d-%m-%y")"
-mv "${HOME}/.config/apps/apps-rc" "${HOME}/.config/apps/apps-rc_backup_${timestamp}"
-printf "Original apps-rc file was moved to\n\"${HOME}/.config/apps/apps-rc_backup_${timestamp}\"\n"
-
 # process cmd parameters...
-filename="${HOME}/.config/apps/apps-rc"
+rcFilePath="${HOME}/.config/apps/apps-rc"
 description="/usr/bin"
 if [ -n "$1" ]; then
     description=$1
 fi
 if [ -n "$2" ]; then
-    filename=$2
+    rcFilePath="${HOME}/.config/apps/$2"
+fi
+rcFileDir="$(dirname ${rcFilePath})"
+
+# this doesn't break anything, but ensures that folder exists
+mkdir -p ${rcFileDir}
+
+# backup - first of all!
+if [ -f ${rcFilePath} ]
+then
+    timestamp="$(date +"%T-%d-%m-%y")"
+    mv "${rcFilePath}" "${rcFilePath}_backup_${timestamp}"
+    printf "Original ${rcFilePath} file was moved to\n\"${rcFilePath}_backup_${timestamp}\"\n"
 fi
 
 # just in case, get folder of this script.
@@ -79,7 +86,7 @@ printf  "<apps >\
 \n    \
 \n    -- Main menu\
 \n    <folder name=\"root\">\
-" > ${filename}
+" > ${rcFilePath}
 
 # Spoiler will spinn, while we processing destination folder.
 spoiler=("-" "\\" "|" "/")
@@ -158,7 +165,7 @@ do
         usedCategories[usedCategoriesi]=${category}
         usedCategoriesi=$((usedCategoriesi+1))
         echo "Adding category \"${category}\""
-        printf "\n        <folder name=\"${category}\" >\n" >> ${filename}
+        printf "\n        <folder name=\"${category}\" >\n" >> ${rcFilePath}
     fi
     
 	# here we search apps that match selected category
@@ -179,15 +186,15 @@ do
         name="$(echo ${categoryItems[k]} | awk -F'~~~' '{print $2}')"
         cmd="$(echo ${categoryItems[k]} | awk -F'~~~' '{print $3}')"
         comment="$(echo ${categoryItems[k]} | awk -F'~~~' '{print $4}')"
-        printf "            <app name=\"${name}\" cmd=\"${cmd}\" comment=\"${comment}\" />\n" >> ${filename}
+        printf "            <app name=\"${name}\" cmd=\"${cmd}\" comment=\"${comment}\" />\n" >> ${rcFilePath}
     done
 	# close category
-    printf "        </folder>\n" >> ${filename}
+    printf "        </folder>\n" >> ${rcFilePath}
 done
 
 # close root menu element and <apps>.
 printf  "${result}
 \n    </folder>\
 \n</apps >\
-\n" >> ${filename}
+\n" >> ${rcFilePath}
 
