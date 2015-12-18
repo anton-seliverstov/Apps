@@ -30,7 +30,7 @@ script:
   - make
 
 after_success:
-  - echo "test" 
+  - echo "User friendly console Applications Menu for Unix & Linux" 
     | sudo checkinstall -D --install="no" --nodoc 
                    --pkgname "apps" 
                    --pkgversion "1.0" 
@@ -42,10 +42,22 @@ after_success:
                    --pkglicense "GNU General Public License, Version 3" 
   - pwd
   - ls
+  - dpkg --contents apps_*_amd64.deb
   - sudo dpkg -i apps_*_amd64.deb
   - cd ..
   - pwd
-  - ls
+  - ls -aC
+  - echo "Testing installation:"
+  - ls -l /usr/bin/apps
+  - ls -l /usr/bin/generate_apps-rc
+  - ls -l /usr/share/man/ru/man1/apps.1.gz
+  - ls -l /usr/share/man/ru/man1/generate_apps-rc.1.gz
+  - ls -l /usr/share/man/ru/man5/apps-rc.5.gz
+  - ls -l /usr/share/man/man1/apps.1.gz
+  - ls -l /usr/share/man/man1/generate_apps-rc.1.gz
+  - ls -l /usr/share/man/man5/apps-rc.5.gz
+  - generate_apps-rc
+  - cat ~/.config/apps/apps-rc
 
 notifications:
   email:
