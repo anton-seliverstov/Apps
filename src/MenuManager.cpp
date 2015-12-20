@@ -27,8 +27,9 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 namespace Apps {
 using namespace AppsXmlConsts;
 
+static string GENERIC_ERROR_MESSAGE;
+
 MenuManager::MenuManager() :
-    mUiOut(new UiPrinter()),
     mSelector(0)
 {
     string homedir = GetEnvVar("HOME");
@@ -39,15 +40,26 @@ MenuManager::MenuManager() :
 
     if(isFileExists(mAppsRcPath) == false)
         createAppsrcFileStub();
+    GENERIC_ERROR_MESSAGE = "Thanks for using apps!\nIt seems like configuration file\n"
+            + mAppsRcPath
+            + "\nis missing or corrupted."
+            + "\nThere are several ways to fix this problem:"
+            + "\n - See \"man apps\" to fix existing file;"
+            + "\n - Delete existing file and run apps again. "
+            + "\n   This will generate a small apps-rc example."
+            + "\n - Run \"generate_apps-rc\" to generate apps-rc based on "
+            + "\n   currently installed applications. "
+            + "\n   See \"man generate_apps-rc\" for reference.";
 
     SglXmlElementPtr dom = SglXml::SglXml::parseFile(mAppsRcPath);
     mMenuParent = findMenuRootElement(dom);
     if(getElementsByTag(mMenuParent, MENU_ITEM_TAG).size() == 0)
-        throw invalid_argument("Thanks for using apps!\nPlease add some categories and applications to\n" + mAppsRcPath);
+        throw invalid_argument(GENERIC_ERROR_MESSAGE);
 
     setupGlobalProperties(dom);
     dom.reset();
 
+    mUiOut = new UiPrinter(mIsShowComments ? 2 : 1);
     eventMenuPrevious();
 }
 
@@ -193,7 +205,7 @@ SglXmlElementPtr MenuManager::findMenuRootElement(SglXmlElementPtr menu)
     for (SglXmlElementPtr element : elements)
         if(element->getAttribute(ATTRIBUTE_NAME) == MENU_ROOT_NAME)
             return element;
-    throw invalid_argument("Thanks for using apps!\nPlease add some categories and applications to\n" + mAppsRcPath);
+    throw invalid_argument(GENERIC_ERROR_MESSAGE);
 }
 
 vector<SglXmlElementPtr> MenuManager::getElementsByTag(SglXmlElementPtr menu, string tag)

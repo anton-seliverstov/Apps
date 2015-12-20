@@ -37,7 +37,7 @@ public:
      * @brief Constructor will try to connect to current console
      * and prepare it for output.
      */
-    UiPrinter();
+    UiPrinter(int rows);
     ~UiPrinter();
 
     /**
@@ -47,11 +47,15 @@ public:
     void print(vector<string> strings);
 
 protected:
-    void jumpUp(int num=1);
+    void clear();
     void clearLine();
+    void jumpUp(int num=1);
+    void hideAnsiCursor();
+    void showAnsiCursor();
 
 protected:
     int     mColumns;
+    int     mRows;
 };
 
 }

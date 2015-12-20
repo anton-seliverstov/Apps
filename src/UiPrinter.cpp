@@ -26,8 +26,9 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Apps {
 
-UiPrinter::UiPrinter() :
-    mColumns(0)
+UiPrinter::UiPrinter(int rows) :
+    mColumns(0),
+    mRows(rows)
 {
     try{
         struct winsize w;
@@ -38,27 +39,45 @@ UiPrinter::UiPrinter() :
         mColumns = 80;
     }
 
-    clearLine();
+    clear();
     jumpUp();
+
+    hideAnsiCursor();
 }
 
 UiPrinter::~UiPrinter()
 {
-    cout << endl;
+    for (int i=0; i<mRows; ++i)
+        cout << endl;
+
+    showAnsiCursor();
 }
 
 void UiPrinter::print(vector<string> strings)
 {
-    clearLine();
+    clear();
     cout << "\r" << strings.at(0);
-    for (int i = 1; i < strings.size(); i++)
+    for (int i = 1; i < strings.size(); ++i)
     {
         cout << "\n";
-        clearLine();
-        cout << "\r" << strings.at(i);
+        clear();
+        string str = strings.at(i);
+        if (str.length() > mColumns)
+            str = str.substr(0, mColumns);
+        cout << "\r" << str;
     }
     jumpUp(strings.size() - 1);
     cout << "\r";
+}
+
+void UiPrinter::clear()
+{
+    for (int i=0; i<mRows; ++i)
+    {
+        clearLine();
+        cout << (i<mRows-1 ? "\n" : "");
+    }
+    jumpUp(mRows-1);
 }
 
 void UiPrinter::clearLine()
@@ -69,8 +88,18 @@ void UiPrinter::clearLine()
 
 void UiPrinter::jumpUp(int num)
 {
-    for (int i=0; i<num; i++)
+    for (int i=0; i<num; ++i)
         cout << "\x1b[A";
+}
+
+void UiPrinter::hideAnsiCursor()
+{
+    printf("\033[?25l");
+}
+
+void UiPrinter::showAnsiCursor()
+{
+    cout << "\033[?25h";
 }
 
 }

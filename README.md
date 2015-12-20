@@ -20,7 +20,7 @@ Handy!
 Installation
 -----------
 
-![#](https://travis-ci.org/anton-seliverstov/Apps.svg?branch=master)
+TravisCI: ![#](https://travis-ci.org/anton-seliverstov/Apps.svg?branch=master)
 ```
 git clone https://github.com/anton-seliverstov/Apps.git Apps
 cd Apps

@@ -20,6 +20,7 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef KEYBOARDREADER_H
 #define KEYBOARDREADER_H
 
+#include <termios.h>
 #include <functional>
 #include <string>
 
@@ -35,31 +36,39 @@ class KeyboardReader
 {
 public:
     /**
-     * @brief Read 1 character without echo.
-     * @return
+     * @param callback - function to subscribe for keyboard events.
      */
-    int static getch();
+    KeyboardReader(function<bool(string)>callback);
+
+    ~KeyboardReader();
 
     /**
-     * @brief Read 1 character with echo.
-     * @return
-     */
-    int static getche();
-
-    /**
-     * @brief subscribes callback for keyboard events.
-     * There is no unsubscribe method.
+     * @brief Continuously reads keyboard and reports to callback.
      * It will break the sequence once it recognized it and on of
      * ANSI sequences, and when callback returns true.
      *
      * @param callback - function to subscribe.
      */
-    void static subscribeForeve(function<bool(string)>callback);
+    void run();
 
 protected:
-    KeyboardReader();
-    int static getchAny(int echo);
+    /**
+     * @brief returns a char
+     * @param echo - echo mode 1=On, 0=Off.
+     * @return
+     */
+    int getChar(bool echo);
+
+    /**
+     * @brief checks known ANSI sequences.
+     * @param sequence - key inputs
+     * @return True/False
+     */
     bool static isAnsiSequence(string sequence);
+
+protected:
+    function<bool(string)>  mCallback;
+    struct termios          originalTermios;
 };
 
 }

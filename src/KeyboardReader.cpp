@@ -19,7 +19,6 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 
 // console access
 #include <stdio.h>
-#include <termios.h>
 
 // character sequence formatted result
 #include <sstream>
@@ -30,70 +29,69 @@ along with Apps.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Apps {
 
-int KeyboardReader::getchAny(int echo)
+KeyboardReader::KeyboardReader(function<bool (string)> callback) :
+    mCallback(callback)
 {
-    int ch = 0;
-    struct termios oldt;
-    tcgetattr(0, &oldt);                      /* grab old terminal i/o settings */
-    //Non-blocking mode is not used in this release.
-    //int flags = fcntl(STDIN_FILENO, F_GETFL, 0);
-    //fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
+    // Backup original terminal state.
+    tcgetattr(0, &originalTermios);
+}
+
+KeyboardReader::~KeyboardReader()
+{
+    // Restore original terminal state.
+    tcsetattr(0, TCSANOW, &originalTermios);
+}
+
+int KeyboardReader::getChar(bool echo)
+{
+    // Make new settings same as old settings.
+    struct termios newTermios = originalTermios;
+    // Disable buffered i/o.
+    newTermios.c_lflag &= ~ICANON;
+    // Set echo mode.
+    newTermios.c_lflag &= echo ? ECHO : ~ECHO;
+    // Use these new terminal i/o settings now.
+    tcsetattr(0, TCSANOW, &newTermios);
+    // Flush STD input.
+    fflush(stdin);
+
+    return getchar();
+}
+
+void KeyboardReader::run()
+{
     try{
-        struct termios newt = oldt;           /* make new settings same as old settings */
-        newt.c_lflag &= ~ICANON;              /* disable buffered i/o */
-        newt.c_lflag &= echo ? ECHO : ~ECHO;  /* set echo mode */
-        tcsetattr(0, TCSANOW, &newt);         /* use these new terminal i/o settings now */
-        fflush(stdin);
-        ch = getchar();
-    }catch (...) {
-        tcsetattr(0, TCSANOW, &oldt);         /* Restore old terminal i/o settings */
-        throw AppsException ("Can't connect to console!", EXCEPTION_ERROR);
+        static const string KEY_ESC_STR = "027";
+        static const int KEY_ESC = 27;
+        ostringstream sequence;
+        while(true)
+        {
+            string current = sequence.str();
+            if (((current.length() >= 3) && (current.substr(0, 3) != KEY_ESC_STR))
+                    || (isAnsiSequence(current) == true))
+            {
+                sequence.str("");
+                sequence.clear();
+            }
+
+            int ch = getChar(false);
+            if (ch == KEY_ESC)
+            {
+                sequence.str("");
+                sequence.clear();
+            }
+
+            current = sequence.str();
+            sequence << (current=="" ? "" : " " ) << setfill('0') << setw(3) << ch;
+            if(mCallback(sequence.str()))
+            {
+                sequence.str("");
+                sequence.clear();
+            }
+        }
     }
-
-    //fcntl(STDIN_FILENO, F_SETFL, flags);
-    tcsetattr(0, TCSANOW, &oldt);             /* Restore old terminal i/o settings */
-    return ch;
-}
-
-int KeyboardReader::getch()
-{
-  return getchAny(0);
-}
-
-int KeyboardReader::getche()
-{
-  return getchAny(1);
-}
-
-void KeyboardReader::subscribeForeve(function<bool(string)>callback)
-{
-    static const string KEY_ESC_STR = "027";
-    static const int KEY_ESC = 27;
-    ostringstream sequence;
-    while(true)
+    catch( ... )
     {
-        string current = sequence.str();
-        if (((current.length() >= 3) && (current.substr(0, 3) != KEY_ESC_STR))
-                || (isAnsiSequence(current) == true))
-        {
-            sequence.str("");
-            sequence.clear();
-        }
-
-        int ch = getch();
-        if (ch == KEY_ESC)
-        {
-            sequence.str("");
-            sequence.clear();
-        }
-
-        current = sequence.str();
-        sequence << (current=="" ? "" : " " ) << setfill('0') << setw(3) << ch;
-        if(callback(sequence.str()))
-        {
-            sequence.str("");
-            sequence.clear();
-        }
     }
 }
 

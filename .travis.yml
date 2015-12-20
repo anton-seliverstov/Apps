@@ -24,7 +24,7 @@ before_script:
   - mkdir build
   - ls
   - cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=Release
+  - cmake ..
 
 script:
   - make
@@ -62,6 +62,7 @@ after_success:
   - echo "Running generate_apps-rc SECOND TIME:"
   - generate_apps-rc
   - cat ~/.config/apps/apps-rc
+  - ls -aC ~/.config/apps/
 
 notifications:
   email:
