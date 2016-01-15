@@ -23,7 +23,7 @@ apps - Удобное консольное "Меню Приложений" дл�
 Установка
 -----------
 
-Download binaries: [![Release Version](https://img.shields.io/github/release/anton-seliverstov/Apps.svg)](https://github.com/anton-seliverstov/Apps/releases), или соберите:
+Скачать бинарники: [![Release Version](https://img.shields.io/github/release/anton-seliverstov/Apps.svg)](https://github.com/anton-seliverstov/Apps/releases), или соберите:
 TravisCI: ![#](https://travis-ci.org/anton-seliverstov/Apps.svg?branch=master)
 ```
 git clone https://github.com/anton-seliverstov/Apps.git Apps
