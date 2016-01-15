@@ -1,5 +1,6 @@
-Apps [![Read in English](http://www.printableworldflags.com/icon-flags/24/United%20Kingdom.png)](https://github.com/anton-seliverstov/Apps) [![Read in Russian](http://www.printableworldflags.com/icon-flags/24/Russian%20Federation.png)](https://github.com/anton-seliverstov/Apps/blob/master/README.ru.md)
+Apps
 ======
+[![Read in English](http://www.printableworldflags.com/icon-flags/24/United%20Kingdom.png)](https://github.com/anton-seliverstov/Apps) [![Read in Russian](http://www.printableworldflags.com/icon-flags/24/Russian%20Federation.png)](https://github.com/anton-seliverstov/Apps/blob/master/README.ru.md)
 
 apps - User friendly console "Applications Menu" for Linux.
 
