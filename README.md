@@ -3,6 +3,8 @@ Apps
 
 apps - User friendly console "Applications Menu" for Linux.
 
+![](https://s.neepic.com/gq4LoBq4.gif)
+
 Most command-line tools and applications have names that are hard to remember
 not only for new users but also for experienced system administrators, 
 when they don't use some console command for a while.
@@ -19,6 +21,8 @@ Handy!
 
 Installation
 -----------
+
+DEB package is availble.
 
 TravisCI: ![#](https://travis-ci.org/anton-seliverstov/Apps.svg?branch=master)
 ```
