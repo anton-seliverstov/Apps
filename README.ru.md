@@ -1,4 +1,4 @@
-Apps
+Apps [![Read in English](http://www.printableworldflags.com/icon-flags/24/United%20Kingdom.png)](https://github.com/anton-seliverstov/Apps) [![Read in Russian](http://www.printableworldflags.com/icon-flags/24/Russian%20Federation.png)](https://github.com/anton-seliverstov/Apps/blob/master/README.ru.md)
 ======
 
 apps - Удобное консольное "Меню Приложений" для Linux.
@@ -22,6 +22,7 @@ apps - Удобное консольное "Меню Приложений" дл�
 Установка
 -----------
 
+Download binaries: [![Release Version](https://img.shields.io/github/release/anton-seliverstov/Apps.svg)](https://github.com/anton-seliverstov/Apps/releases), или соберите:
 TravisCI: ![#](https://travis-ci.org/anton-seliverstov/Apps.svg?branch=master)
 ```
 git clone https://github.com/anton-seliverstov/Apps.git Apps
