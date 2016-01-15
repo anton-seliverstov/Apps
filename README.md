@@ -1,7 +1,7 @@
 Apps
 ======
 
-apps - User friendly console "Applications Menu" for Unix & Linux.
+apps - User friendly console "Applications Menu" for Linux.
 
 Most command-line tools and applications have names that are hard to remember
 not only for new users but also for experienced system administrators, 
@@ -29,7 +29,7 @@ git submodule update
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make
-echo "User friendly console Applications Menu for Unix & Linux" | checkinstall -D --install="no" --pkgname "apps" --pkgversion "1.0" --pkgarch "amd64" --pkgrelease "1" --pkgsource "https://github.com/anton-seliverstov/Apps.git" --pkggroup "misc" --pkglicense "GNU General Public License, Version 3" --install=no --nodoc
+echo "User friendly console Applications Menu for Linux" | checkinstall -D --install="no" --pkgname "apps" --pkgversion "1.0" --pkgarch "amd64" --pkgrelease "1" --pkgsource "https://github.com/anton-seliverstov/Apps.git" --pkggroup "misc" --pkglicense "GNU General Public License, Version 3" --install=no --nodoc
 dpkg -i apps_1.0-1_amd64.deb
 ```
 
